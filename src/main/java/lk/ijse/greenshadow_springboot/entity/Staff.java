@@ -23,6 +23,7 @@ public class Staff {
         private String email;
         private Date dob;
         private String address;
+
         private String contact;
         private Date joinDate;
         @Enumerated(EnumType.STRING)
