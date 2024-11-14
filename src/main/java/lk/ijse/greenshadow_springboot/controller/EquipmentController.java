@@ -82,7 +82,7 @@ public class EquipmentController {
     public ResponseEntity<Void> updateEquipment(@PathVariable("equipmentId") String equipmentId, @RequestBody EquipmentDto equipmentDto) {
         try {
             Regex regexValidator = new Regex(Regex.PatternType.EQUIPMENT);
-            if (!regexValidator.matches(equipmentId)) {
+            if (!regexValidator.matches(equipmentId) || equipmentDto == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
