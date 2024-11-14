@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
 
 @Entity
@@ -27,4 +28,7 @@ public class Crop {
     @ManyToOne
     @JoinColumn(name = "field_id")
     private Field field;
+
+    @ManyToMany(mappedBy = "cropLogs", cascade = CascadeType.ALL)
+    private List<Log> logs;
 }

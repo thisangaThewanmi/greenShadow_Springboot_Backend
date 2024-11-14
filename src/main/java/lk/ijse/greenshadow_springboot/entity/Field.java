@@ -26,9 +26,22 @@ public class Field {
     private String image1;
     @Column(columnDefinition = "LONGTEXT")
     private String image2;
-    @ManyToMany(mappedBy = "fields")
-    private Set<Staff> staffMembers = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "field-staff-details",
+            joinColumns = @JoinColumn(name = "fieldCode"),
+            inverseJoinColumns = @JoinColumn(name = "staffId")
+    )
+    private List<Staff> staffMembers;
+
+    @OneToMany(mappedBy = "field")
+    private List<Equipment> equipments;
+
 
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Crop> crops ;
+
+    @ManyToMany(mappedBy = "fieldLogs", cascade = CascadeType.ALL)
+    private List<Log> logs;
 }

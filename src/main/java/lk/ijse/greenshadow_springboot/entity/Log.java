@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,28 +23,30 @@ public class Log {
     @Column(columnDefinition = "LONGTEXT")
     private String image2;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "staff_logs_details",
             joinColumns = @JoinColumn(name = "log_id"),
             inverseJoinColumns = @JoinColumn(name = "staff_id")
     )
-    private Set<Staff> staffLogs = new HashSet<>();
-    @ManyToMany
+    private List<Staff> staffLogs ;
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "field_logs",
             joinColumns = @JoinColumn(name = "log_id"),
             inverseJoinColumns = @JoinColumn(name = "field_id")
     )
-    private Set<Field> fieldLogs = new HashSet<>();
+    private List<Field> fieldLogs;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "crop_logs",
             joinColumns = @JoinColumn(name = "log_id"),
             inverseJoinColumns = @JoinColumn(name = "crop_id")
     )
-    private Set<Crop> cropLogs = new HashSet<>();
+    private List<Crop> cropLogs;
 
 }
 

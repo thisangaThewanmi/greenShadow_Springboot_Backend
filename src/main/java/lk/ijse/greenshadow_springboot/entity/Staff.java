@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -16,32 +17,43 @@ import java.util.List;
 @Data
 
 public class Staff {
+
+
+
         @Id
         private String staffId;
         private String firstName;
         private String lastName;
-        private String email;
-        private Date dob;
-        private String address;
-
-        private String contact;
-        private Date joinDate;
+        private String designation;
+        private String gender;
+        private LocalDate joinedDate;
+        private LocalDate dob;
+        private String addressLine1;
+        private String addressLine2;
+        private String addressLine3;
+        private String addressLine4;
+        private String addressLine5;
+        private String contactNo;
+        @Column(unique = true)
+        private String staffEmail;
         @Enumerated(EnumType.STRING)
         private Role role;
 
+        @OneToOne(mappedBy = "staff")
+        private User user;
 
-        @ManyToMany
-        @JoinTable(
-                name = "staff_fields_detail",
-                joinColumns = @JoinColumn(name = "staff_id"),
-                inverseJoinColumns = @JoinColumn(name = "field_id")
-        )
-        private List<Field> fields;
-
-        @OneToMany(mappedBy = "staff")
+        @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
         private List<Vehicle> vehicles;
 
+        @ManyToMany(mappedBy = "staffMembers", cascade = CascadeType.ALL)
+        private List<Field> fields;
 
-    }
+        @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+        private List<Equipment> equipments;
+
+        @ManyToMany(mappedBy = "staffLogs", cascade = CascadeType.ALL)
+        private List<Log> logs;
+
+}
 
 

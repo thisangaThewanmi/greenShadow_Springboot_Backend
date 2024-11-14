@@ -1,6 +1,7 @@
 package lk.ijse.greenshadow_springboot.service;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.greenshadow_springboot.customStatus.SelectedIdErrorStatus;
 import lk.ijse.greenshadow_springboot.dao.StaffDao;
 import lk.ijse.greenshadow_springboot.dto.StaffStatus;
 import lk.ijse.greenshadow_springboot.dto.impl.StaffDto;
@@ -8,12 +9,14 @@ import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.util.Mapping;
+import lk.ijse.greenshadow_springboot.util.Regex;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -29,10 +32,12 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public void saveStaff(StaffDto staffDto) {
+        System.out.println("staffDto: " + staffDto);
        Staff savedStaff = staffDao.save(staffMapping.toStaffEntity(staffDto));
+        System.out.println("savedStaff: " + savedStaff);
        if(savedStaff == null) {
-           throw new DataPersistException("Staff save sucessfully");
-
+           //If not saved
+           throw new DataPersistException("Failed to save staff data");
        }
     }
 
@@ -45,13 +50,13 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public StaffStatus getStaff(String staffId) {
-      /*  if(staffDao.existsById(staffId)){
+
+        if(staffDao.existsById(staffId)){
             var selectedStaff = staffDao.getReferenceById(staffId);
             return staffMapping.toStaffDto(selectedStaff);
         }else {
-            return new StaffStatus(2, "Selected note not found") {
-            };
-        }*/
+            return new SelectedIdErrorStatus(2, "Selected staff not found");
+        }
     }
 
     @Override
@@ -67,22 +72,34 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public void updateStaff(String staffId, StaffDto staffDto) {
-
         Optional<Staff> findStaff = staffDao.findById(staffId);
         if (!findStaff.isPresent()) {
-            throw new StaffNotFoundException("Staff  not found!");
-        }else{
-            findStaff.get().setStaffId(staffDto.getStaffId());
-            findStaff.get().setAddress(staffDto.getAddress());
-            findStaff.get().setContact(staffDto.getContact());
-            findStaff.get().setEmail(staffDto.getEmail());
-            findStaff.get().setDob(staffDto.getDob());
-            findStaff.get().setFirstName(staffDto.getFirstName());
-            findStaff.get().setLastName(staffDto.getLastName());
-            findStaff.get().setRole(staffDto.getRole());
-            findStaff.get().setJoinDate(staffDto.getJoinDate());
+            throw new StaffNotFoundException("Staff not found!");
+        } else {
+            Staff staff = findStaff.get();
+            staff.setFirstName(staffDto.getFirstName());
+            staff.setLastName(staffDto.getLastName());
+            staff.setDesignation(staffDto.getDesignation());
+            staff.setGender(staffDto.getGender());
+            staff.setJoinedDate(staffDto.getJoinedDate());
+            staff.setDob(staffDto.getDob());
+            staff.setAddressLine1(staffDto.getAddressLine1());
+            staff.setAddressLine2(staffDto.getAddressLine2());
+            staff.setAddressLine3(staffDto.getAddressLine3());
+            staff.setAddressLine4(staffDto.getAddressLine4());
+            staff.setAddressLine5(staffDto.getAddressLine5());
+            staff.setContactNo(staffDto.getContactNo());
+            staff.setStaffEmail(staffDto.getStaffEmail());
+            staff.setRole(staffDto.getRole());
+
+            // Save or update the staff entity
+            staffDao.save(staff);
         }
+
+    }
+
+
 
 
     }
-}
+

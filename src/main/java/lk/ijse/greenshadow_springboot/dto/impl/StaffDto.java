@@ -1,25 +1,32 @@
 package lk.ijse.greenshadow_springboot.dto.impl;
 
+import lk.ijse.greenshadow_springboot.dto.StaffStatus;
 import lk.ijse.greenshadow_springboot.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class StaffDto{
-    private String staffId;
-    private String address;
-    private String contact;
-    private Date dob;
-    private String email;
-    private String firstName;
-    private Date joinDate;
-    private String lastName;
-    private Role role;  // Could also be an Enum
+public class StaffDto implements StaffStatus {
 
-    // Getters and Setters
+    private String staffId;
+    private String firstName;
+    private String lastName;
+    private String designation;
+    private String gender;
+    private LocalDate joinedDate;
+    private LocalDate dob;
+    private String addressLine1;
+    private String addressLine2;
+    private String addressLine3;
+    private String addressLine4;
+    private String addressLine5;
+    private String contactNo;
+    private String staffEmail;
+    private Role role;
 }
