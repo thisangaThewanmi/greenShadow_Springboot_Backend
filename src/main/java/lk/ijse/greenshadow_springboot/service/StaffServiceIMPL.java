@@ -32,7 +32,6 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public void saveStaff(StaffDto staffDto) {
-        System.out.println("staffDto: " + staffDto);
        Staff savedStaff = staffDao.save(staffMapping.toStaffEntity(staffDto));
         System.out.println("savedStaff: " + savedStaff);
        if(savedStaff == null) {

@@ -1,7 +1,9 @@
 package lk.ijse.greenshadow_springboot.util;
 
 
+import lk.ijse.greenshadow_springboot.dto.impl.EquipmentDto;
 import lk.ijse.greenshadow_springboot.dto.impl.StaffDto;
+import lk.ijse.greenshadow_springboot.entity.Equipment;
 import lk.ijse.greenshadow_springboot.entity.Staff;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -16,16 +18,22 @@ public class Mapping {
     @Autowired
     private ModelMapper modelMapper;
     // for staff mapping
-    public Staff toStaffEntity(StaffDto staffDto ) {
-
-        return modelMapper.map(staffDto, Staff.class);
-    }
-
+    public Staff toStaffEntity(StaffDto staffDto ) {return modelMapper.map(staffDto, Staff.class);}
     public StaffDto toStaffDto(Staff staff) {
         return modelMapper.map(staff, StaffDto.class);
     }
     public List<StaffDto> asStaffDtoList(List<Staff> staff) {
         return modelMapper.map(staff, new TypeToken<List<StaffDto>>(){}.getType());
+    }
+
+    //for Equipment
+
+    public Equipment toEquipmentEntity(EquipmentDto equipmentDto ) {return modelMapper.map(equipmentDto, Equipment.class);}
+    public EquipmentDto toEquipmentDto(Equipment equipment) {
+        return modelMapper.map(equipment, EquipmentDto.class);
+    }
+    public List<EquipmentDto> asEquipmentDtoList(List<Equipment> equipments) {
+        return modelMapper.map(equipments, new TypeToken<List<EquipmentDto>>(){}.getType());
     }
 
 }
