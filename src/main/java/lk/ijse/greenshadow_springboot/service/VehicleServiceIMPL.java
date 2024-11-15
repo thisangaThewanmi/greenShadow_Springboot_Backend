@@ -10,13 +10,9 @@ import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.entity.Vehicle;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
 import lk.ijse.greenshadow_springboot.exception.NotFoundException;
+import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.util.Mapping;
-import lk.ijse.greenshadow_springboot.util.Regex;
-import org.hibernate.annotations.TypeRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,9 +36,8 @@ public class VehicleServiceIMPL implements VehicleService {
         Vehicle savedVehicle = vehicleDao.save(vehicleMapping.toVehicleEntity(vehicleDto));
         if (vehicleDto.getStaffId() != null) {
             Staff staff = staffDao.findById(vehicleDto.getStaffId())
+                    .orElseThrow(() -> new StaffNotFoundException("Staff not found with ID: " + vehicleDto.getStaffId()));
             savedVehicle.setStaff(staff);
-        }else{
-
         }
 
         if(savedVehicle == null) {
@@ -67,6 +62,14 @@ public class VehicleServiceIMPL implements VehicleService {
                 vehicle.setFuelType(vehicleDto.getFuelType());
                 vehicle.setPlateNumber(vehicleDto.getPlateNumber());
                 vehicle.setRemarks(vehicleDto.getRemarks());
+
+                if (vehicleDto.getStaffId() != null) {
+                    Staff staff = staffDao.findById(vehicleDto.getStaffId())
+                            .orElseThrow(() -> new StaffNotFoundException("Staff not found with ID: " + vehicleDto.getStaffId()));
+                    vehicle.setStaff(staff);
+                } else {
+                    vehicle.setStaff(null); // Clear staff if not provided
+                }
             }
     }
 

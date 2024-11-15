@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
         private String status;
         private String remarks;
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne
         @JoinColumn(name = "staffId")
         private Staff staff;
 

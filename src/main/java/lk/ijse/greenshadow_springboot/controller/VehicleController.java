@@ -79,7 +79,9 @@ public class VehicleController {
     @PutMapping(value = "/{vehicleId}")
     public ResponseEntity<Void> updateVehicle(@PathVariable("vehicleId") String vehicleId, @RequestBody VehicleDto vehicleDto) {
         try {
-            Regex regexValidator = new Regex(Regex.PatternType.STAFF);
+            Regex regexValidator = new Regex(Regex.PatternType.VEHICLE);
+            System.out.println("vehicleDto:"+vehicleDto.toString());
+            System.out.println(regexValidator.matches(vehicleId));
             if (!regexValidator.matches(vehicleId) || vehicleDto == null) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
