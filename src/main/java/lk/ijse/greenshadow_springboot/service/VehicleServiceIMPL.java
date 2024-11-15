@@ -2,6 +2,7 @@ package lk.ijse.greenshadow_springboot.service;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.greenshadow_springboot.customStatus.SelectedIdErrorStatus;
+import lk.ijse.greenshadow_springboot.dao.StaffDao;
 import lk.ijse.greenshadow_springboot.dao.VehicleDao;
 import lk.ijse.greenshadow_springboot.dto.VehicleStatus;
 import lk.ijse.greenshadow_springboot.dto.impl.VehicleDto;
@@ -31,9 +32,18 @@ public class VehicleServiceIMPL implements VehicleService {
     @Autowired
     VehicleDao vehicleDao;
 
+    @Autowired
+    private StaffDao staffDao;
+
     @Override
     public void addVehicle(VehicleDto vehicleDto) {
         Vehicle savedVehicle = vehicleDao.save(vehicleMapping.toVehicleEntity(vehicleDto));
+        if (vehicleDto.getStaffId() != null) {
+            Staff staff = staffDao.findById(vehicleDto.getStaffId())
+            savedVehicle.setStaff(staff);
+        }else{
+
+        }
 
         if(savedVehicle == null) {
             //If not saved
