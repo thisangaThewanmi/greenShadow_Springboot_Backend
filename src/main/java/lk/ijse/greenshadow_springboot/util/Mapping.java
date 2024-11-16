@@ -2,9 +2,11 @@ package lk.ijse.greenshadow_springboot.util;
 
 
 import lk.ijse.greenshadow_springboot.dto.impl.EquipmentDto;
+import lk.ijse.greenshadow_springboot.dto.impl.FieldDto;
 import lk.ijse.greenshadow_springboot.dto.impl.StaffDto;
 import lk.ijse.greenshadow_springboot.dto.impl.VehicleDto;
 import lk.ijse.greenshadow_springboot.entity.Equipment;
+import lk.ijse.greenshadow_springboot.entity.Field;
 import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.entity.Vehicle;
 import org.modelmapper.ModelMapper;
@@ -48,5 +50,17 @@ public class Mapping {
     public List<VehicleDto> asVehicleDtoList(List<Vehicle> vehicles) {
         return modelMapper.map(vehicles, new TypeToken<List<VehicleDto>>(){}.getType());
     }
+
+    //for Field
+
+    public Field toFieldEntity(FieldDto fieldDto) {return modelMapper.map(fieldDto,Field.class);}
+    public FieldDto toFieldDto(Field field) {
+        return modelMapper.map(field, FieldDto.class);
+    }
+    public List<FieldDto> toFieldDtoList(List<Field> fields) {
+        return modelMapper.map(fields, new TypeToken<List<FieldDto>>(){}.getType());
+    }
+
+
 
 }

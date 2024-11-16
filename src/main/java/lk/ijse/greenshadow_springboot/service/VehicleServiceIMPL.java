@@ -9,7 +9,7 @@ import lk.ijse.greenshadow_springboot.dto.impl.VehicleDto;
 import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.entity.Vehicle;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
-import lk.ijse.greenshadow_springboot.exception.NotFoundException;
+import lk.ijse.greenshadow_springboot.exception.VehicleNotFoundException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class VehicleServiceIMPL implements VehicleService {
 
             Optional<Vehicle> exsistedVehicle = vehicleDao.findById(vehicleId);
             if(!exsistedVehicle.isPresent()) {
-                throw new NotFoundException("Vehicle id not found");
+                throw new VehicleNotFoundException("Vehicle id not found");
 
             }else{
                 Vehicle vehicle = exsistedVehicle.get();
@@ -95,7 +95,7 @@ public class VehicleServiceIMPL implements VehicleService {
     public void deleteVehicle(String vehicleId) {
         Optional<Vehicle> exsistedVehicle = vehicleDao.findById(vehicleId);
         if(!exsistedVehicle.isPresent()) {
-            throw new NotFoundException("Vehicle id not found");
+            throw new VehicleNotFoundException("Vehicle id not found");
         }else{
             vehicleDao.deleteById(vehicleId);
         }

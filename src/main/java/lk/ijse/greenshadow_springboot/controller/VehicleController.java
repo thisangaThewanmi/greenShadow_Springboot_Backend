@@ -5,7 +5,7 @@ import lk.ijse.greenshadow_springboot.customStatus.SelectedIdErrorStatus;
 import lk.ijse.greenshadow_springboot.dto.VehicleStatus;
 import lk.ijse.greenshadow_springboot.dto.impl.VehicleDto;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
-import lk.ijse.greenshadow_springboot.exception.NotFoundException;
+import lk.ijse.greenshadow_springboot.exception.VehicleNotFoundException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.service.VehicleService;
 import lk.ijse.greenshadow_springboot.util.Regex;
@@ -51,7 +51,7 @@ public class VehicleController {
             vehicleService.deleteVehicle(vehicleId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        } catch (NotFoundException e) {
+        } catch (VehicleNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
