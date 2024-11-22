@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.geo.Point;
 
 import java.util.HashSet;
@@ -27,12 +29,13 @@ public class Field {
     @Column(columnDefinition = "LONGTEXT")
     private String image2;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "field-staff-details",
             joinColumns = @JoinColumn(name = "fieldCode"),
             inverseJoinColumns = @JoinColumn(name = "staffId")
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Staff> staffMembers;
 
     @OneToMany(mappedBy = "field")

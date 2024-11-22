@@ -1,8 +1,10 @@
 package lk.ijse.greenshadow_springboot.customStatus;
 
 import lk.ijse.greenshadow_springboot.dto.EquipmentStatus;
+import lk.ijse.greenshadow_springboot.dto.FieldStatus;
 import lk.ijse.greenshadow_springboot.dto.StaffStatus;
 import lk.ijse.greenshadow_springboot.dto.VehicleStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SelectedIdErrorStatus extends Throwable implements StaffStatus, EquipmentStatus, VehicleStatus {
+public class SelectedIdErrorStatus extends Throwable implements StaffStatus, EquipmentStatus, VehicleStatus, FieldStatus {
     private int status;
     private String statusMessage;
 }

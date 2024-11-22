@@ -45,7 +45,7 @@ public class Staff {
         @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
         private List<Vehicle> vehicles;
 
-        @ManyToMany(mappedBy = "staffMembers", cascade = CascadeType.ALL)
+        @ManyToMany(mappedBy = "staffMembers", cascade = {CascadeType.PERSIST, CascadeType.MERGE,})
         private List<Field> fields;
 
         @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)

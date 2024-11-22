@@ -10,7 +10,9 @@ public class Regex {
         STAFF,
         CROP,
         EQUIPMENT,
-        VEHICLE
+        VEHICLE,
+        FIELD,
+        LOG
     }
 
     // Define regex patterns as static constants
@@ -18,6 +20,8 @@ public class Regex {
     public static final String CROP_PATTERN = "^C-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
     public static final String EQUIPMENT_PATTERN = "^E-\\d{3}$";
     public static final String VEHICLE_PATTERN = "^V-\\d{3}$";
+    public static final String FIELD_PATTERN ="^F-\\d{3}$";
+    public static final String LOG_PATTERN ="^L-\\d{3}$";
 
 
     private Pattern pattern;
@@ -37,6 +41,12 @@ public class Regex {
             case VEHICLE:
                 this.pattern = Pattern.compile(VEHICLE_PATTERN);
                 break;
+            case FIELD:
+                this.pattern = Pattern.compile(FIELD_PATTERN);
+                break;
+                case LOG:
+                    this.pattern = Pattern.compile(LOG_PATTERN);
+                    break;
             default:
                 throw new IllegalArgumentException("Unknown pattern type");
         }
