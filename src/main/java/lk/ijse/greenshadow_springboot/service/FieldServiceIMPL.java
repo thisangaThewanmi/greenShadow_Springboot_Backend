@@ -118,30 +118,17 @@ public class FieldServiceIMPL implements FieldService {
 
     }
 
+
+
     @Override
     public void deleteField(String fieldId) {
 
-    }
-
-    @Override
-    public FieldStatus getSelectedField(String fieldId) {
-        return null;
-    }
-
-    @Override
-    public List<FieldDto> getAllFields() {
-        return List.of();
-    }
-}
-
-    /*@Override
-    public void deleteField(String fieldId) {
-
-        if( !fieldDao.existsById(fieldId)){
-            throw new  FeildNotFoundException();
-        }else{
+        if (!fieldDao.existsById(fieldId)) {
+            throw new FeildNotFoundException();
+        } else {
             fieldDao.deleteById(fieldId);
         }
+
     }
 
     @Override
@@ -158,9 +145,10 @@ public class FieldServiceIMPL implements FieldService {
 
     @Override
     public List<FieldDto> getAllFields() {
+        System.out.println("get all feilds called");
         List<Field> allFields = fieldDao.findAll();
         List<FieldDto> fieldDtos = fieldMapping.toFieldDtoList(allFields);
         return fieldDtos;
     }
 }
-*/
+

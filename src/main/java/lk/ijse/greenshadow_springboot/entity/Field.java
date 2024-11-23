@@ -29,13 +29,14 @@ public class Field {
     @Column(columnDefinition = "LONGTEXT")
     private String image2;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(
             name = "field-staff-details",
-            joinColumns = @JoinColumn(name = "fieldCode"),
+            joinColumns = @JoinColumn(name = "FieldId"),
             inverseJoinColumns = @JoinColumn(name = "staffId")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)  // This will delete the entry in the join table when a Staff is deleted
+
     private List<Staff> staffMembers;
 
     @OneToMany(mappedBy = "field")

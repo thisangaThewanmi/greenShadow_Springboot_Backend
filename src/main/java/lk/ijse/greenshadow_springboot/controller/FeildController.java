@@ -81,7 +81,7 @@ public class FeildController {
         }
     }
 
-   /* @DeleteMapping(value="/{fieldId}")
+    @DeleteMapping(value="/{fieldId}")
     public ResponseEntity<Void> deleteField(@PathVariable String fieldId) {
             try {
 
@@ -94,6 +94,7 @@ public class FeildController {
         } catch (FeildNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+                e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -160,8 +161,6 @@ public class FeildController {
                 return fieldService.getSelectedField(fieldId);
             }
     }
-
-*/
 
 
 
