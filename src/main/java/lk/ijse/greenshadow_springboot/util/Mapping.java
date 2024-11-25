@@ -1,14 +1,8 @@
 package lk.ijse.greenshadow_springboot.util;
 
 
-import lk.ijse.greenshadow_springboot.dto.impl.EquipmentDto;
-import lk.ijse.greenshadow_springboot.dto.impl.FieldDto;
-import lk.ijse.greenshadow_springboot.dto.impl.StaffDto;
-import lk.ijse.greenshadow_springboot.dto.impl.VehicleDto;
-import lk.ijse.greenshadow_springboot.entity.Equipment;
-import lk.ijse.greenshadow_springboot.entity.Field;
-import lk.ijse.greenshadow_springboot.entity.Staff;
-import lk.ijse.greenshadow_springboot.entity.Vehicle;
+import lk.ijse.greenshadow_springboot.dto.impl.*;
+import lk.ijse.greenshadow_springboot.entity.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +55,26 @@ public class Mapping {
         return modelMapper.map(fields, new TypeToken<List<FieldDto>>(){}.getType());
     }
 
+
+    //forCrop
+    public Crop toCropEntity(CropDto cropDto) {return modelMapper.map(cropDto,Crop.class);}
+    public CropDto toCropDto(Crop crop) {
+        return modelMapper.map(crop, CropDto.class);
+    }
+    public List<CropDto> toCropDtoList(List<Crop> crops) {
+        return modelMapper.map(crops, new TypeToken<List<CropDto>>(){}.getType());
+    }
+
+
+    //forLog
+
+    public Log toLogEntity(LogDto logDto) {return modelMapper.map(logDto,Log.class);}
+    public LogDto toLogDto(Log log) {
+        return modelMapper.map(log, LogDto.class);
+    }
+    public List<LogDto> toLogDtoList(List<Log> logs) {
+        return modelMapper.map(logs, new TypeToken<List<LogDto>>(){}.getType());
+    }
 
 
 }
