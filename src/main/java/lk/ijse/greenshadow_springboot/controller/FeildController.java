@@ -112,7 +112,7 @@ public class FeildController {
 
         try {
 
-            Regex regexValidator = new Regex(Regex.PatternType.EQUIPMENT);
+            Regex regexValidator = new Regex(Regex.PatternType.FIELD);
             if (!regexValidator.matches(fieldId)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

@@ -17,7 +17,7 @@ public class Regex {
 
     // Define regex patterns as static constants
     public static final String STAFF_PATTERN = "^S-\\d{3}$";
-    public static final String CROP_PATTERN = "^C-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+    public static final String CROP_PATTERN = "^C-\\d{3}$";
     public static final String EQUIPMENT_PATTERN = "^E-\\d{3}$";
     public static final String VEHICLE_PATTERN = "^V-\\d{3}$";
     public static final String FIELD_PATTERN ="^F-\\d{3}$";
