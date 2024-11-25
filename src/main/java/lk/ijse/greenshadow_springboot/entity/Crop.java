@@ -26,9 +26,9 @@ public class Crop {
     private String image1;
 
     @ManyToOne
-    @JoinColumn(name = "field_id")
+    @JoinColumn(name = "fieldId")
     private Field field;
 
-    @ManyToMany(mappedBy = "cropLogs", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "cropIds", cascade = CascadeType.ALL)
     private List<Log> logs;
 }

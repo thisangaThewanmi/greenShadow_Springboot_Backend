@@ -55,7 +55,7 @@ public class Staff {
         @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
         private List<Equipment> equipments;
 
-        @ManyToMany(mappedBy = "staffLogs", cascade = CascadeType.ALL)
+        @ManyToMany(mappedBy = "staffIds", cascade = CascadeType.ALL)
         private List<Log> logs;
 
 }

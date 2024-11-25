@@ -46,6 +46,6 @@ public class Field {
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Crop> crops ;
 
-    @ManyToMany(mappedBy = "fieldLogs", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "fieldIds", cascade = CascadeType.ALL)
     private List<Log> logs;
 }

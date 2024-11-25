@@ -23,30 +23,30 @@ public class Log {
     @Column(columnDefinition = "LONGTEXT")
     private String image2;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "staff_logs_details",
-            joinColumns = @JoinColumn(name = "log_id"),
-            inverseJoinColumns = @JoinColumn(name = "staff_id")
+            joinColumns = @JoinColumn(name = "logId"),
+            inverseJoinColumns = @JoinColumn(name = "staffId")
     )
-    private List<Staff> staffLogs ;
+    private List<Staff> staffIds ;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "field_logs",
-            joinColumns = @JoinColumn(name = "log_id"),
-            inverseJoinColumns = @JoinColumn(name = "field_id")
+            joinColumns = @JoinColumn(name = "logId"),
+            inverseJoinColumns = @JoinColumn(name = "FieldId")
     )
-    private List<Field> fieldLogs;
+    private List<Field> fieldIds;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "crop_logs",
-            joinColumns = @JoinColumn(name = "log_id"),
-            inverseJoinColumns = @JoinColumn(name = "crop_id")
+            joinColumns = @JoinColumn(name = "logId"),
+            inverseJoinColumns = @JoinColumn(name = "cropId")
     )
-    private List<Crop> cropLogs;
+    private List<Crop> cropIds;
 
 }
 
