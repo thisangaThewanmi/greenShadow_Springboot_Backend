@@ -31,12 +31,10 @@ public class Field {
 
     @ManyToMany
     @JoinTable(
-            name = "field-staff-details",
+            name = "field_staff_details",
             joinColumns = @JoinColumn(name = "FieldId"),
             inverseJoinColumns = @JoinColumn(name = "staffId")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)  // This will delete the entry in the join table when a Staff is deleted
-
     private List<Staff> staffMembers;
 
     @OneToMany(mappedBy = "field")

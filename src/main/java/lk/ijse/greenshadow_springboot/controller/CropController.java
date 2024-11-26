@@ -40,10 +40,12 @@ public class CropController {
             @RequestPart("commonName") String commonName,
             @RequestPart("specificName") String specificName,
             @RequestPart("category") String category,
-            @RequestPart("season") MultipartFile season,
+            @RequestPart("season") String season,
             @RequestPart("image1") MultipartFile image1,
             @RequestPart("fieldId") String fieldId
     ){
+
+        System.out.println("cropControler");
 
         String cropImg = "";
 
@@ -57,7 +59,7 @@ public class CropController {
             cropDto.setCommonName(commonName);
             cropDto.setSpecificName(specificName);
             cropDto.setCategory(category);
-            cropDto.setSeason(season.getOriginalFilename());
+            cropDto.setSeason(season);
             cropDto.setImage1(cropImg);
             cropDto.setFieldId(fieldId);
 
@@ -66,6 +68,7 @@ public class CropController {
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         }catch (DataPersistException e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
             e.printStackTrace();
@@ -96,7 +99,7 @@ public class CropController {
             @RequestPart("commonName") String commonName,
             @RequestPart("specificName") String specificName,
             @RequestPart("category") String category,
-            @RequestPart("season") MultipartFile season,
+            @RequestPart("season")String season,
             @RequestPart("image1") MultipartFile image1,
             @RequestPart("fieldId") String fieldId
     ){
@@ -119,7 +122,7 @@ public class CropController {
             cropDto.setCommonName(commonName);
             cropDto.setSpecificName(specificName);
             cropDto.setCategory(category);
-            cropDto.setSeason(season.getOriginalFilename());
+            cropDto.setSeason(season);
             cropDto.setImage1(cropImg);
             cropDto.setFieldId(fieldId);
 

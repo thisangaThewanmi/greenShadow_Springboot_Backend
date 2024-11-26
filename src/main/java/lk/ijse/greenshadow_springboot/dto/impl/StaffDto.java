@@ -1,6 +1,7 @@
 package lk.ijse.greenshadow_springboot.dto.impl;
 
 import lk.ijse.greenshadow_springboot.dto.StaffStatus;
+import lk.ijse.greenshadow_springboot.entity.Field;
 import lk.ijse.greenshadow_springboot.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,4 +31,5 @@ public class StaffDto implements StaffStatus {
     private String contactNo;
     private String staffEmail;
     private Role role;
+
 }

@@ -47,9 +47,7 @@ public class Staff {
         @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
         private List<Vehicle> vehicles;
 
-        @ManyToMany(mappedBy = "staffMembers"/*cascade = {CascadeType.PERSIST, CascadeType.MERGE}*/ /*cascade = CascadeType.ALL*/)
-        @OnDelete(action = OnDeleteAction.CASCADE)  // This will delete the entry in the join table when a Staff is deleted
-
+        @ManyToMany(mappedBy = "staffMembers"/*cascade=CascadeType.ALL*/)
         private List<Field> fields;
 
         @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)

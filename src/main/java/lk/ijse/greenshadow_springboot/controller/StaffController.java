@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,11 @@ public class StaffController  {
     public ResponseEntity<Void> addStaff(@RequestBody StaffDto staffDto) {
 
         try {
+
+
             staffService.saveStaff(staffDto);
+
+
             //if sucessfully saved
             return new ResponseEntity<>(HttpStatus.CREATED);
 
