@@ -9,6 +9,7 @@ import lk.ijse.greenshadow_springboot.exception.DataPersistException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.service.StaffService;
 import lk.ijse.greenshadow_springboot.util.Regex;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,15 +21,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/staff")
+@CrossOrigin(origins = "http://localhost:63342")
 public class StaffController  {
 
     @Autowired
     private StaffService staffService;
 
 
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addStaff(@RequestBody StaffDto staffDto) {
+        System.out.println("staffDto comes to: " + staffDto);
 
         try {
 
@@ -50,6 +53,8 @@ public class StaffController  {
         }
     }
 
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(value = "/{staffID}",produces = MediaType.APPLICATION_JSON_VALUE)
     public StaffStatus getSelectedStaff(@PathVariable("staffID") String staffId){
         // Create a Regex instance for the NOTE_ID pattern
@@ -65,13 +70,15 @@ public class StaffController  {
 
 
 
-
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StaffDto> getAllStaff() {
 
         return staffService.getAllStaff();
     }
 
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @DeleteMapping(value = "/{staffId}")
     public ResponseEntity<Object> deleteStaff(@PathVariable("staffId") String staffId) {
 
@@ -95,6 +102,8 @@ public class StaffController  {
         }
 
 
+
+         @CrossOrigin(origins = "http://localhost:63342")
         @PutMapping(value="/{staffId}")
         public ResponseEntity<Void> updateStaff(@PathVariable("staffId") String staffId,@RequestBody StaffDto staffDto) {
 

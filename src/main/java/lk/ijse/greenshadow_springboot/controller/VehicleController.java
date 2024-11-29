@@ -19,12 +19,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/vehicle")
+@CrossOrigin(origins = "http://localhost:63342")
 public class VehicleController {
 
     @Autowired
     VehicleService vehicleService;
 
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveVehicle(@RequestBody VehicleDto vehicleDto) {
         try {
@@ -38,6 +40,7 @@ public class VehicleController {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @DeleteMapping(value = "/{vehicleId}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleId") String vehicleId) {
 
@@ -58,6 +61,8 @@ public class VehicleController {
         }
     }
 
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(value = "/{vehicleId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public VehicleStatus getVehicle(@PathVariable("vehicleId") String vehicleId) {
 
@@ -70,12 +75,16 @@ public class VehicleController {
     }
 
 
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VehicleDto> getVehicles() {
         return vehicleService.getAllVehicles();
     }
 
 
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @PutMapping(value = "/{vehicleId}")
     public ResponseEntity<Void> updateVehicle(@PathVariable("vehicleId") String vehicleId, @RequestBody VehicleDto vehicleDto) {
         try {
