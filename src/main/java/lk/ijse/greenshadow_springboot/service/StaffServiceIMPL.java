@@ -67,12 +67,17 @@ public class StaffServiceIMPL implements StaffService {
             throw new StaffNotFoundException("Staff with id "+staffId+" not found!");
         }else {*/
 
-            Staff staff = staffDao.findById(staffId)
+        Staff staff = staffDao.findById(staffId)
                     .orElseThrow(() -> new StaffNotFoundException("Staff not found with ID: "+staffId ));
 
             // Remove associations with staff members
         staff.getFields().forEach(field -> field.getStaffMembers().remove(staff));
         staff.getFields().clear();
+
+        //aluthen dana eka
+        staff.getLogs().forEach(log -> log.getStaffIds().remove(staff));
+        staff.getLogs().clear();
+
             staffDao.deleteById(staffId);
     }
 
