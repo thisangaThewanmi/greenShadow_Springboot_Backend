@@ -5,6 +5,7 @@ import lk.ijse.greenshadow_springboot.customStatus.SelectedIdErrorStatus;
 import lk.ijse.greenshadow_springboot.dao.StaffDao;
 import lk.ijse.greenshadow_springboot.dto.StaffStatus;
 import lk.ijse.greenshadow_springboot.dto.impl.StaffDto;
+import lk.ijse.greenshadow_springboot.entity.Field;
 import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
@@ -60,13 +61,19 @@ public class StaffServiceIMPL implements StaffService {
 
     @Override
     public void deleteStaff(String staffId) {
-
+/*
         Optional<Staff> existedStaff = staffDao.findById(staffId);
         if (!existedStaff.isPresent()) {
             throw new StaffNotFoundException("Staff with id "+staffId+" not found!");
-        }else {
+        }else {*/
+
+            Staff staff = staffDao.findById(staffId)
+                    .orElseThrow(() -> new StaffNotFoundException("Staff not found with ID: "+staffId ));
+
+            // Remove associations with staff members
+        staff.getFields().forEach(field -> field.getStaffMembers().remove(staff));
+        staff.getFields().clear();
             staffDao.deleteById(staffId);
-        }
     }
 
     @Override
@@ -83,10 +90,10 @@ public class StaffServiceIMPL implements StaffService {
             staff.setJoinedDate(staffDto.getJoinedDate());
             staff.setDob(staffDto.getDob());
             staff.setAddressLine1(staffDto.getAddressLine1());
-            staff.setAddressLine2(staffDto.getAddressLine2());
+           /* staff.setAddressLine2(staffDto.getAddressLine2());
             staff.setAddressLine3(staffDto.getAddressLine3());
             staff.setAddressLine4(staffDto.getAddressLine4());
-            staff.setAddressLine5(staffDto.getAddressLine5());
+            staff.setAddressLine5(staffDto.getAddressLine5());*/
             staff.setContactNo(staffDto.getContactNo());
             staff.setStaffEmail(staffDto.getStaffEmail());
             staff.setRole(staffDto.getRole());

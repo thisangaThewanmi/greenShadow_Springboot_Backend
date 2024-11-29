@@ -4,6 +4,7 @@ package lk.ijse.greenshadow_springboot.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -18,8 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 
-public class Staff {
 
+public class Staff {
 
 
         @Id
@@ -55,7 +56,4 @@ public class Staff {
 
         @ManyToMany(mappedBy = "staffIds", cascade = CascadeType.ALL)
         private List<Log> logs;
-
 }
-
-

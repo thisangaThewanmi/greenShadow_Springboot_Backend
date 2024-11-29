@@ -64,6 +64,10 @@ public class FieldServiceIMPL implements FieldService {
                 for (String staffId : fieldDto.getStaffIds()) {
                     Staff staff = staffDao.findById(staffId)
                             .orElseThrow(() -> new StaffNotFoundException("Staff not found with ID: " + staffId));
+                    // Add the saved Field to the Staff's fields list
+                    staff.getFields().add(savedField);
+
+                    // Add the Staff to the staffEntities list
                     staffEntities.add(staff);
                 }
 
