@@ -18,11 +18,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/equipment")
+@CrossOrigin(origins = "http://localhost:63342")
 public class EquipmentController {
 
     @Autowired
     private EquipmentService equipmentService;
 
+
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addEquipmnet(@RequestBody EquipmentDto equipmentDto) {
         try {
@@ -38,6 +41,7 @@ public class EquipmentController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(value = "/{equipmentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public EquipmentStatus getEquipment(@PathVariable("equipmentId") String equipmentId) {
 
@@ -50,14 +54,16 @@ public class EquipmentController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EquipmentDto> getAllEquipment() {
         return equipmentService.getAllEquipment();
     }
 
 
-    @DeleteMapping(value = "/{euipmentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteEquipment(@PathVariable("euipmentId") String equipmentId) {
+    @CrossOrigin(origins = "http://localhost:63342")
+    @DeleteMapping(value = "/{equipmentId}")
+    public ResponseEntity<Void> deleteEquipment(@PathVariable("equipmentId") String equipmentId) {
 
         try {
 
@@ -78,6 +84,7 @@ public class EquipmentController {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @PutMapping(value = "/{equipmentId}")
     public ResponseEntity<Void> updateEquipment(@PathVariable("equipmentId") String equipmentId, @RequestBody EquipmentDto equipmentDto) {
         try {
