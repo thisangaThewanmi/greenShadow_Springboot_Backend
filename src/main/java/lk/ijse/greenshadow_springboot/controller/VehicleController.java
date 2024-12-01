@@ -8,6 +8,7 @@ import lk.ijse.greenshadow_springboot.exception.DataPersistException;
 import lk.ijse.greenshadow_springboot.exception.VehicleNotFoundException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.service.VehicleService;
+import lk.ijse.greenshadow_springboot.util.AppUtil;
 import lk.ijse.greenshadow_springboot.util.Regex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,7 @@ public class VehicleController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap> saveVehicle(@RequestBody VehicleDto vehicleDto) {
         try {
+            vehicleDto.setVehicleId(AppUtil.generateVehicleId());
             vehicleService.addVehicle(vehicleDto);
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Vehicle added successfully");}}, HttpStatus.CREATED);
