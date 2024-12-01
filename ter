@@ -1,0 +1,17 @@
+[33mcommit 0775ad968935fb742e5035add4c02053e507cd06[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: thisangaThewanmi <thisangat2005@gmail.com>
+Date:   Mon Dec 2 01:18:46 2024 +0530
+
+    added crossorigin for EquipmentController
+
+[33mcommit 2b671a00be64651dd6d213bfb59b7250ba0f1c29[m
+Author: thisangaThewanmi <thisangat2005@gmail.com>
+Date:   Mon Dec 2 01:07:15 2024 +0530
+
+    added a body to response entity in staffController
+
+[33mcommit bd1da2e58b2e6e1dd77a620dda5098ccc525c0e2[m
+Author: thisangaThewanmi <thisangat2005@gmail.com>
+Date:   Sat Nov 30 04:04:36 2024 +0530
+
+    Added cross origin policy to staff and vehicle
