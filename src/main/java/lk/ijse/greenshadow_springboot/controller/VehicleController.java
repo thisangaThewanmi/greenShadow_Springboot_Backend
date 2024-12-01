@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -28,12 +29,14 @@ public class VehicleController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveVehicle(@RequestBody VehicleDto vehicleDto) {
+    public ResponseEntity<HashMap> saveVehicle(@RequestBody VehicleDto vehicleDto) {
         try {
             vehicleService.addVehicle(vehicleDto);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(new HashMap<String, String>() {{
+                put("message", "Vehicle added successfully");}}, HttpStatus.CREATED);
         } catch (DataPersistException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new HashMap<String, String>() {{
+                put("message", "Error occurred while saving a vehicle");}}, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -42,7 +45,7 @@ public class VehicleController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @DeleteMapping(value = "/{vehicleId}")
-    public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleId") String vehicleId) {
+    public ResponseEntity<HashMap> deleteVehicle(@PathVariable("vehicleId") String vehicleId) {
 
         try {
 
@@ -52,10 +55,12 @@ public class VehicleController {
             }
 
             vehicleService.deleteVehicle(vehicleId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new HashMap<String, String>() {{
+                put("message", "Vehicle deleted successfully");}}, HttpStatus.NO_CONTENT);
 
         } catch (VehicleNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new HashMap<String, String>() {{
+                put("message", "VehicleId was not found");}}, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -86,7 +91,7 @@ public class VehicleController {
 
     @CrossOrigin(origins = "http://localhost:63342")
     @PutMapping(value = "/{vehicleId}")
-    public ResponseEntity<Void> updateVehicle(@PathVariable("vehicleId") String vehicleId, @RequestBody VehicleDto vehicleDto) {
+    public ResponseEntity<HashMap> updateVehicle(@PathVariable("vehicleId") String vehicleId, @RequestBody VehicleDto vehicleDto) {
         try {
             Regex regexValidator = new Regex(Regex.PatternType.VEHICLE);
             System.out.println("vehicleDto:"+vehicleDto.toString());
@@ -95,10 +100,12 @@ public class VehicleController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             vehicleService.updateVehicle(vehicleId, vehicleDto);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new HashMap<String, String>() {{
+                put("message", "Vehicle updated successfully");}}, HttpStatus.NO_CONTENT);
         } catch (StaffNotFoundException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new HashMap<String, String>() {{
+                put("message", "VehicleId was not found");}}, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
