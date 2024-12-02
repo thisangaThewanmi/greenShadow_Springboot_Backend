@@ -36,7 +36,7 @@ public class CropController {
 
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> addCrop(
-            @RequestPart("cropId") String cropId,
+            /*@RequestPart("cropId") String cropId,*/
             @RequestPart("commonName") String commonName,
             @RequestPart("specificName") String specificName,
             @RequestPart("category") String category,
@@ -55,7 +55,6 @@ public class CropController {
 
 
             CropDto cropDto = new CropDto();
-            cropDto.setCropId(cropId);
             cropDto.setCommonName(commonName);
             cropDto.setSpecificName(specificName);
             cropDto.setCategory(category);
@@ -64,6 +63,7 @@ public class CropController {
             cropDto.setFieldId(fieldId);
 
             // Save the crop entity
+            cropDto.setCropId(AppUtil.generateCropId());
             cropService.saveCrop(cropDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
 

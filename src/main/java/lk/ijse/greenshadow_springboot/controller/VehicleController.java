@@ -84,7 +84,6 @@ public class VehicleController {
     @PutMapping(value = "/{vehicleId}")
     public ResponseEntity<HashMap> updateVehicle(@PathVariable("vehicleId") String vehicleId, @RequestBody VehicleDto vehicleDto) {
         try {
-
             vehicleService.updateVehicle(vehicleId, vehicleDto);
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Vehicle updated successfully");}}, HttpStatus.OK);

@@ -8,6 +8,7 @@ import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.service.StaffService;
+import lk.ijse.greenshadow_springboot.util.AppUtil;
 import lk.ijse.greenshadow_springboot.util.Regex;
 import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class StaffController  {
 
         try {
 
-
+            staffDto.setStaffId(AppUtil.generateStaffId());
             staffService.saveStaff(staffDto);
 
 
@@ -65,13 +66,7 @@ public class StaffController  {
     @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(value = "/{staffID}",produces = MediaType.APPLICATION_JSON_VALUE)
     public StaffStatus getSelectedStaff(@PathVariable("staffID") String staffId){
-        // Create a Regex instance for the NOTE_ID pattern
-        Regex regexValidator = new Regex(Regex.PatternType.STAFF);
 
-        // Use the Regex class to validate the noteId
-        if (!regexValidator.matches(staffId)) {
-            return new SelectedIdErrorStatus(1, "Staff ID is not valid");
-        }
 
         return staffService .getStaff(staffId); // Fetch and return the note
     }
@@ -93,9 +88,6 @@ public class StaffController  {
         Regex regexValidator = new Regex(Regex.PatternType.STAFF);
 
         try {
-            if (!regexValidator.matches(staffId)) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
 
             staffService.deleteStaff(staffId);
             return new ResponseEntity<>(new HashMap<String, String>() {{
@@ -121,10 +113,6 @@ public class StaffController  {
 
             System.out.println(staffDto);
             try {
-                Regex regexValidator = new Regex(Regex.PatternType.STAFF);
-                if (!regexValidator.matches(staffId) || staffDto == null) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
                 staffService.updateStaff(staffId, staffDto);
                 return new ResponseEntity<>(new HashMap<String, String>() {{
                     put("message", "Staff updated Sucessfully");}}, HttpStatus.NO_CONTENT);

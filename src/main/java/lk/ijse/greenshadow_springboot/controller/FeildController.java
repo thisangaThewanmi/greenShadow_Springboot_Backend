@@ -33,7 +33,7 @@ public class FeildController {
 
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> addField(
-            @RequestPart("fieldId") String fieldId,
+            /*@RequestPart("fieldId") String fieldId,*/
             @RequestPart("name") String name,
             @RequestPart("location") String location, // Parse into Point later
             @RequestPart("size") String size,
@@ -61,7 +61,6 @@ public class FeildController {
 
 
             FieldDto fieldDto = new FieldDto();
-            fieldDto.setFieldId(fieldId);
             fieldDto.setName(name);
             fieldDto.setLocation(location);
             fieldDto.setSize(Double.parseDouble(size));
@@ -70,6 +69,7 @@ public class FeildController {
             fieldDto.setStaffIds(staffIdList);
 
             // Save the field entity (Service call)
+            fieldDto.setFieldId(AppUtil.generateFieldId());
             fieldService.addField(fieldDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
@@ -111,11 +111,6 @@ public class FeildController {
 
 
         try {
-
-            Regex regexValidator = new Regex(Regex.PatternType.FIELD);
-            if (!regexValidator.matches(fieldId)) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
             List<String> staffIdList = Arrays.asList(staffIds.split(","));
 
             String base64Pimg1 = AppUtil.imageToBase64(image1.getBytes());
