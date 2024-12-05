@@ -8,13 +8,11 @@ import lk.ijse.greenshadow_springboot.dto.FieldStatus;
 import lk.ijse.greenshadow_springboot.dto.impl.FieldDto;
 import lk.ijse.greenshadow_springboot.dto.impl.StaffDto;
 import lk.ijse.greenshadow_springboot.dto.impl.VehicleDto;
+import lk.ijse.greenshadow_springboot.entity.Crop;
 import lk.ijse.greenshadow_springboot.entity.Field;
 import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.entity.Vehicle;
-import lk.ijse.greenshadow_springboot.exception.DataPersistException;
-import lk.ijse.greenshadow_springboot.exception.FeildNotFoundException;
-import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
-import lk.ijse.greenshadow_springboot.exception.VehicleNotFoundException;
+import lk.ijse.greenshadow_springboot.exception.*;
 import lk.ijse.greenshadow_springboot.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
@@ -130,6 +128,14 @@ public class FieldServiceIMPL implements FieldService {
         if (!fieldDao.existsById(fieldId)) {
             throw new FeildNotFoundException();
         } else {
+
+            Field field = fieldDao.findById(fieldId)
+                    .orElseThrow(() -> new FeildNotFoundException("Field not found: "+fieldId));
+
+            field.getLogs().forEach(log -> log.getFieldIds().remove(fieldId));
+            field.getLogs().clear();
+
+            fieldDao.deleteById(fieldId);
             fieldDao.deleteById(fieldId);
         }
 

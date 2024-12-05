@@ -25,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/crop")
+@CrossOrigin(origins = "http://localhost:63342")
 public class CropController {
 
 
@@ -34,6 +35,7 @@ public class CropController {
     @Autowired
     Mapping cropMapping;
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> addCrop(
             /*@RequestPart("cropId") String cropId,*/
@@ -76,6 +78,7 @@ public class CropController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @DeleteMapping(value="/{cropId}")
     public ResponseEntity<Void> deleteCrop(@PathVariable ("cropId")  String cropId) {
         try {
@@ -94,6 +97,7 @@ public class CropController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @PutMapping(value = "/{cropId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateCrop(@PathVariable("cropId") String cropId,
             @RequestPart("commonName") String commonName,
@@ -141,6 +145,7 @@ public class CropController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CropDto>>getAllCrops() {
         try {
@@ -154,6 +159,7 @@ public class CropController {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @GetMapping(value = "/{cropId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CropStatus getCrop(@PathVariable("cropId") String cropId) {
 
