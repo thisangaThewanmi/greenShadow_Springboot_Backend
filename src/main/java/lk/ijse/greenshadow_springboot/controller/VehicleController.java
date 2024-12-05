@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,14 +24,14 @@ import java.util.List;
 @RequestMapping("/api/v1/vehicle")
 @CrossOrigin(origins = "http://localhost:63342")
 public class VehicleController {
-
     @Autowired
     VehicleService vehicleService;
 
 
-    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
     public ResponseEntity<HashMap> saveVehicle(@RequestBody VehicleDto vehicleDto) {
+        System.out.println("enter the saveVehicle method"+vehicleDto);
         try {
             vehicleDto.setVehicleId(AppUtil.generateVehicleId());
             vehicleService.addVehicle(vehicleDto);
@@ -40,6 +41,7 @@ public class VehicleController {
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Error occurred while saving a vehicle");}}, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

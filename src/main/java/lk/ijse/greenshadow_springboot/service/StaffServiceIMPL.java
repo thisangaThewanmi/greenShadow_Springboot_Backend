@@ -9,6 +9,7 @@ import lk.ijse.greenshadow_springboot.entity.Field;
 import lk.ijse.greenshadow_springboot.entity.Staff;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
+import lk.ijse.greenshadow_springboot.util.AppUtil;
 import lk.ijse.greenshadow_springboot.util.Mapping;
 import lk.ijse.greenshadow_springboot.util.Regex;
 import org.apache.catalina.mapper.Mapper;
@@ -30,21 +31,28 @@ public class StaffServiceIMPL implements StaffService {
     @Autowired
     private Mapping staffMapping;
 
+    @Autowired
+    private Mapping staffService;
+
+
 
     @Override
-    public void saveStaff(StaffDto staffDto) {
+    public StaffDto saveStaff(StaffDto staffDto) {
+        staffDto.setStaffId(AppUtil.generateStaffId());
        Staff savedStaff = staffDao.save(staffMapping.toStaffEntity(staffDto));
         System.out.println("savedStaff: " + savedStaff);
        if(savedStaff == null) {
            //If not saved
            throw new DataPersistException("Failed to save staff data");
        }
+       return staffMapping.toStaffDto(savedStaff);
     }
 
 
 
     @Override
     public List<StaffDto> getAllStaff() {
+
         return staffMapping.asStaffDtoList(staffDao.findAll());
     }
 
@@ -110,7 +118,17 @@ public class StaffServiceIMPL implements StaffService {
     }
 
 
+    /*--------------- new------------*/
 
+
+
+
+    @Override
+    public Optional findByEmail(String email) {
+        Optional<Staff> byEmail = staffDao.findByStaffEmail(email);
+
+        return byEmail.map(staffMapping::toStaffDto);
+}
 
     }
 

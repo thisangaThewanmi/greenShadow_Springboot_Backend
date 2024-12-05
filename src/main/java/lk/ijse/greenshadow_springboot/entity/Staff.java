@@ -42,7 +42,7 @@ public class Staff {
         @Enumerated(EnumType.STRING)
         private Role role;
 
-        @OneToOne(mappedBy = "staff")
+        @OneToOne(mappedBy = "staff",cascade = CascadeType.ALL, orphanRemoval = true)
         private User user;
 
         @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)

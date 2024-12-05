@@ -52,7 +52,15 @@ public class CropServiceImpl implements CropService {
         Optional<Crop> exsistedCrop= cropDao.findById(cropId);
 
         if(exsistedCrop.isPresent()){
-            cropDao.delete(exsistedCrop.get());
+            Crop crop = cropDao.findById(cropId)
+                    .orElseThrow(() -> new CropNotFoundException("Crop not found: "+cropId));
+
+            crop.getLogs().forEach(log -> log.getCropIds().remove(cropId));
+            crop.getLogs().clear();
+
+            cropDao.deleteById(cropId);
+
+
         }else{
             throw new EquipmentNotFoundException("Failed to delete crop");
         }

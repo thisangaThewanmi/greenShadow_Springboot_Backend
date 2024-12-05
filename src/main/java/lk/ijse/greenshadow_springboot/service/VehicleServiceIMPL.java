@@ -13,6 +13,7 @@ import lk.ijse.greenshadow_springboot.exception.VehicleNotFoundException;
 import lk.ijse.greenshadow_springboot.exception.StaffNotFoundException;
 import lk.ijse.greenshadow_springboot.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class VehicleServiceIMPL implements VehicleService {
     private StaffDao staffDao;
 
     @Override
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATOR')")
     public void addVehicle(VehicleDto vehicleDto) {
         Vehicle savedVehicle = vehicleDao.save(vehicleMapping.toVehicleEntity(vehicleDto));
         if (vehicleDto.getStaffId() != null) {

@@ -36,14 +36,9 @@ public class StaffController  {
         System.out.println("staffDto comes to: " + staffDto);
 
         try {
-
-            staffDto.setStaffId(AppUtil.generateStaffId());
             staffService.saveStaff(staffDto);
-
-
             //if sucessfully saved
            /* return new ResponseEntity<>(HttpStatus.CREATED);*/
-
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Staff added successfully");}}, HttpStatus.CREATED);
 

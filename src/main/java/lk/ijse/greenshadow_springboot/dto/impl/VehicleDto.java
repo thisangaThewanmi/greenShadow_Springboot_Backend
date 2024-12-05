@@ -6,12 +6,14 @@ import lk.ijse.greenshadow_springboot.dto.VehicleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
 public class VehicleDto implements VehicleStatus {
     private String vehicleId;
     private String plateNumber;
