@@ -1,14 +1,17 @@
 package lk.ijse.greenshadow_springboot.dto.impl;
 
+import lk.ijse.greenshadow_springboot.dto.UserStatus;
 import lk.ijse.greenshadow_springboot.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class UserDto {
+public class UserDto implements UserStatus {
 
     private String userId;
     private String email;

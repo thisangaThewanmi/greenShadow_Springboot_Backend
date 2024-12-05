@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
 
 import lk.ijse.greenshadow_springboot.customStatus.SelectedIdErrorStatus;
 import lk.ijse.greenshadow_springboot.dao.UserDao;
+import lk.ijse.greenshadow_springboot.dto.UserStatus;
 import lk.ijse.greenshadow_springboot.dto.impl.UserDto;
 import lk.ijse.greenshadow_springboot.entity.User;
 import lk.ijse.greenshadow_springboot.exception.DataPersistException;
@@ -114,15 +115,13 @@ public class UserServiceImpl implements UserService {
     // get selected user
     @Override
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATOR') or hasRole('SCIENTIST')")
-    public UserDto getSelectedUser(String userId) {
+    public UserStatus getSelectedUser(String userId) {
         if(userDAO.existsById(userId)){
             User selectedUser = userDAO.getReferenceById(userId);
             return mapping.toUserDto(selectedUser);
         } else {
-/*
             return new SelectedIdErrorStatus(2, "User with id " + userId + " not found");
-*/
-            return  null;
+
         }
     }
 

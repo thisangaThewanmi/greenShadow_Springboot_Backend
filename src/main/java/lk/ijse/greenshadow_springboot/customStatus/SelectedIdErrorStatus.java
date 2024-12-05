@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SelectedIdErrorStatus extends Throwable implements StaffStatus, EquipmentStatus, VehicleStatus, FieldStatus, CropStatus,LogStatus {
+public class SelectedIdErrorStatus extends Throwable implements StaffStatus, EquipmentStatus, VehicleStatus, FieldStatus, CropStatus,LogStatus,UserStatus {
     private int status;
     private String statusMessage;
 }
