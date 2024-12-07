@@ -37,7 +37,7 @@ public class Field {
     )
     private List<Staff> staffMembers;
 
-    @OneToMany(mappedBy = "field")
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Equipment> equipments;
 
 

@@ -29,6 +29,6 @@ public class Crop {
     @JoinColumn(name = "fieldId")
     private Field field;
 
-    @ManyToMany(mappedBy = "cropIds", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "cropIds")
     private List<Log> logs;
 }

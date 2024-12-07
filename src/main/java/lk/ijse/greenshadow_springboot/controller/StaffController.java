@@ -11,6 +11,8 @@ import lk.ijse.greenshadow_springboot.service.StaffService;
 import lk.ijse.greenshadow_springboot.util.AppUtil;
 import lk.ijse.greenshadow_springboot.util.Regex;
 import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +32,8 @@ public class StaffController  {
     private StaffService staffService;
 
 
+    private static final Logger logger = LoggerFactory.getLogger(StaffController.class);
+
     @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HashMap> addStaff(@RequestBody StaffDto staffDto) {
@@ -37,6 +41,7 @@ public class StaffController  {
 
         try {
             staffService.saveStaff(staffDto);
+            logger.info("staff saved");
             //if sucessfully saved
            /* return new ResponseEntity<>(HttpStatus.CREATED);*/
             return new ResponseEntity<>(new HashMap<String, String>() {{
@@ -45,6 +50,7 @@ public class StaffController  {
 
             //catching the error which comes from service layer
         } catch (DataPersistException e) {
+            logger.error("data persistance"+e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Error occured while saving");}}, HttpStatus.BAD_REQUEST);
@@ -52,6 +58,7 @@ public class StaffController  {
 
             //if there is an error which dosent occour from service
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Change the email");}}, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -80,21 +87,23 @@ public class StaffController  {
     @DeleteMapping(value = "/{staffId}")
     public ResponseEntity<Object> deleteStaff(@PathVariable("staffId") String staffId) {
 
-        Regex regexValidator = new Regex(Regex.PatternType.STAFF);
 
         try {
 
             staffService.deleteStaff(staffId);
+            logger.info("staff deleted successfully");
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Staff deleted successfully");}}, HttpStatus.NO_CONTENT);
 
 
         } catch (StaffNotFoundException e) {
+            logger.error("Id was not found"+e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(new HashMap<String, String>() {{
                 put("message", "Staff id was not found");}}, HttpStatus.NOT_FOUND);
 
         } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -109,15 +118,18 @@ public class StaffController  {
             System.out.println(staffDto);
             try {
                 staffService.updateStaff(staffId, staffDto);
+                logger.info("staff updated successfully");
                 return new ResponseEntity<>(new HashMap<String, String>() {{
                     put("message", "Staff updated Sucessfully");}}, HttpStatus.NO_CONTENT);
 
             }catch (StaffNotFoundException e) {
+                logger.error("Id was not found"+e.getMessage());
                 e.printStackTrace();
                 return new ResponseEntity<>(new HashMap<String, String>() {{
                     put("message", "Staff was not found");}}, HttpStatus.BAD_REQUEST);
 
             }catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 

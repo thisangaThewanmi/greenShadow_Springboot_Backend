@@ -45,13 +45,13 @@ public class Staff {
         @OneToOne(mappedBy = "staff",cascade = CascadeType.ALL, orphanRemoval = true)
         private User user;
 
-        @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL,orphanRemoval = true)
         private List<Vehicle> vehicles;
 
         @ManyToMany(mappedBy = "staffMembers"/*cascade=CascadeType.ALL*/)
         private List<Field> fields;
 
-        @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL,orphanRemoval = true)
         private List<Equipment> equipments;
 
         @ManyToMany(mappedBy = "staffIds", cascade = CascadeType.ALL)

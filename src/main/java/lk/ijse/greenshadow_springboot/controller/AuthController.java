@@ -21,13 +21,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:63342")
 public class AuthController {
 
     private final StaffService staffService;
     private final AuthService authService;
 
     // user register
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(value = "signup", consumes = MediaType.APPLICATION_JSON_VALUE)
     //@PreAuthorize("hasRole('MANAGER') or hasRole('ADMINISTRATOR') or hasRole('SCIENTIST')")
     public ResponseEntity<JwtAuthResponse> createUser(@RequestBody UserDto userDTO) {
@@ -65,12 +66,14 @@ public class AuthController {
     }
 
     // log in user
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping(value = "signIn", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<JwtAuthResponse> signIn(@RequestBody SignIn signIn){
         return ResponseEntity.ok(authService.signIn(signIn));
     }
 
     // refresh token
+    @CrossOrigin(origins = "http://localhost:63342")
     @PostMapping("refresh")
     public ResponseEntity<JwtAuthResponse> refreshToken(@RequestParam("existingToken") String existingToken) {
         return ResponseEntity.ok(authService.refreshToken(existingToken));

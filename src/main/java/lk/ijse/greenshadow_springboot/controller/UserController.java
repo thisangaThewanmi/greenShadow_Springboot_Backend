@@ -21,6 +21,7 @@ public class UserController {
     private UserService userService;
 
 
+
     // get all users
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDto> getAllUsers(){

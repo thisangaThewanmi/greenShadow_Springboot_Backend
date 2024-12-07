@@ -40,7 +40,6 @@ public class LogController {
 
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveLog(
-            @RequestPart("logId") String logId,
             @RequestPart ("logDetails")String logDetails,
             @RequestPart("date") String date,
             @RequestPart("image2")String image,
@@ -64,8 +63,9 @@ public class LogController {
                 base64Img = null;
             }
 
+
             LogDto logDto = new LogDto();
-            logDto.setLogId(logId);
+            logDto.setLogId(AppUtil.generateLogId());
             logDto.setLogDetails(logDetails);
             logDto.setDate(Date.valueOf(date));
             logDto.setImage2(base64Img);
@@ -90,11 +90,6 @@ public class LogController {
     @DeleteMapping(value="/{logId}")
     public ResponseEntity<Void> deleteLog(@PathVariable String logId) {
         try {
-
-            Regex regexChecker = new Regex(Regex.PatternType.LOG);
-            if (!regexChecker.matches(logId)) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
             logService.deleteLog(logId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (LogNotFoundException e) {
@@ -168,13 +163,9 @@ public class LogController {
     @GetMapping(value = "/{logId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public LogStatus getLog(@PathVariable("logId") String logId) {
 
-        Regex regexValidator = new Regex(Regex.PatternType.LOG);
-        if (!regexValidator.matches(logId)) {
-            return new SelectedIdErrorStatus(1, "Log ID is not valid");
-        } else{
             return logService.getSelectedLog(logId);
         }
     }
 
 
-}
+

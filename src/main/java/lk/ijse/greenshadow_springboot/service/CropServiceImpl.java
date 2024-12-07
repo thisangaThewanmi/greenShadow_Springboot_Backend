@@ -61,8 +61,6 @@ public class CropServiceImpl implements CropService {
             cropDao.deleteById(cropId);
 
 
-        }else{
-            throw new EquipmentNotFoundException("Failed to delete crop");
         }
 
     }

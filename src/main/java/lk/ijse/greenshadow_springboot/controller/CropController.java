@@ -13,6 +13,8 @@ import lk.ijse.greenshadow_springboot.service.FieldService;
 import lk.ijse.greenshadow_springboot.util.AppUtil;
 import lk.ijse.greenshadow_springboot.util.Mapping;
 import lk.ijse.greenshadow_springboot.util.Regex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +27,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/crop")
+@CrossOrigin(origins = "http://localhost:63342")
+
 public class CropController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CropController.class);
 
 
     @Autowired
@@ -36,7 +42,7 @@ public class CropController {
 
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> addCrop(
-            /*@RequestPart("cropId") String cropId,*/
+
             @RequestPart("commonName") String commonName,
             @RequestPart("specificName") String specificName,
             @RequestPart("category") String category,
@@ -64,35 +70,46 @@ public class CropController {
 
             // Save the crop entity
             cropDto.setCropId(AppUtil.generateCropId());
+            logger.info("generated the cropId: " + cropDto.getCropId());
             cropService.saveCrop(cropDto);
+            logger.info("save the crop");
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         }catch (DataPersistException e) {
             e.printStackTrace();
+            logger.error("data persist exception");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
             e.printStackTrace();
+            logger.error("500 exception "+e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:63342")
 
     @DeleteMapping(value="/{cropId}")
     public ResponseEntity<Void> deleteCrop(@PathVariable ("cropId")  String cropId) {
         try {
 
-            Regex regexChecker = new Regex(Regex.PatternType.CROP);
-            if (!regexChecker.matches(cropId)) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
             cropService.deleteCrop(cropId);
+            logger.info("delete the crop");
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         } catch (FeildNotFoundException e) {
+            logger.error("crop id not found");
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error("500 exception "+e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @CrossOrigin(origins = "http://localhost:63342")
 
     @PutMapping(value = "/{cropId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateCrop(@PathVariable("cropId") String cropId,
@@ -128,6 +145,7 @@ public class CropController {
 
             // Save the crop entity
             cropService.updateCrop(cropDto,cropId);
+            logger.info("updated the crop");
             return new ResponseEntity<>(HttpStatus.OK);
 
 
@@ -137,32 +155,35 @@ public class CropController {
         } catch (FeildNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            logger.error("500 exception "+e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @CrossOrigin(origins = "http://localhost:63342")
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CropDto>>getAllCrops() {
         try {
             List<CropDto> crops = cropService.getAllCrop();
+            logger.info("returned All crops");
             return new ResponseEntity<>(crops, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
+            logger.error("500 exception "+e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
     }
 
 
+    @CrossOrigin(origins = "http://localhost:63342")
+
     @GetMapping(value = "/{cropId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CropStatus getCrop(@PathVariable("cropId") String cropId) {
-
-        Regex regexValidator = new Regex(Regex.PatternType.CROP);
-        if (!regexValidator.matches(cropId)) {
-            return new SelectedIdErrorStatus(1, "Crop ID is not valid");
-        } else{
             return cropService.getSelectedCrop(cropId);
-        }
+    }
     }
 
 
@@ -171,4 +192,3 @@ public class CropController {
 
 
 
-}

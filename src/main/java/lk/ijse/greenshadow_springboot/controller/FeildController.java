@@ -10,6 +10,8 @@ import lk.ijse.greenshadow_springboot.service.FieldService;
 import lk.ijse.greenshadow_springboot.util.AppUtil;
 import lk.ijse.greenshadow_springboot.util.Mapping;
 import lk.ijse.greenshadow_springboot.util.Regex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/field")
+@CrossOrigin(origins = "http://localhost:63342")
+
 public class FeildController {
 
 
@@ -30,6 +34,9 @@ public class FeildController {
 
     @Autowired
     Mapping fieldMapping;
+
+    private static final Logger logger = LoggerFactory.getLogger(FeildController.class);
+
 
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> addField(
@@ -71,33 +78,38 @@ public class FeildController {
             // Save the field entity (Service call)
             fieldDto.setFieldId(AppUtil.generateFieldId());
             fieldService.addField(fieldDto);
+            logger.info("field added successfully");
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         }catch (DataPersistException e) {
+            logger.error("data persistance error"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e) {
+            logger.error(e.getMessage());
              e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:63342")
+
     @DeleteMapping(value="/{fieldId}")
     public ResponseEntity<Void> deleteField(@PathVariable String fieldId) {
             try {
-
-                Regex regexChecker = new Regex(Regex.PatternType.FIELD);
-                if (!regexChecker.matches(fieldId)) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
             fieldService.deleteField(fieldId);
+            logger.info("field deleted successfully");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (FeildNotFoundException e) {
+                logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:63342")
 
     @PutMapping(value = "/{fieldId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateField(@PathVariable("fieldId") String fieldId,
@@ -126,33 +138,38 @@ public class FeildController {
             fieldDto.setStaffIds(staffIdList);
 
             fieldService.updateField(fieldId, fieldDto);
+            logger.info("field updated successfully");
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (FeildNotFoundException e) {
+            logger.error("Id not found"+e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:63342")
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<FieldDto>> getAllFields() {
         try {
             List<FieldDto> fields = fieldService.getAllFields();
+            logger.info("getAllFields successfully");
             return new ResponseEntity<>(fields, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
+    @CrossOrigin(origins = "http://localhost:63342")
+
     @GetMapping(value = "/{fieldId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldStatus getField(@PathVariable("fieldId") String fieldId) {
 
-            Regex regexValidator = new Regex(Regex.PatternType.FIELD);
-            if (!regexValidator.matches(fieldId)) {
-                return new SelectedIdErrorStatus(1, "Field ID is not valid");
-            } else{
                 return fieldService.getSelectedField(fieldId);
             }
     }
@@ -163,4 +180,4 @@ public class FeildController {
 
 
 
-}
+

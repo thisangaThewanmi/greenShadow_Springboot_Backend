@@ -6,29 +6,48 @@ import java.util.UUID;
 public class AppUtil {
 
     public static String generateUserId() {
-        return "USER-" + UUID.randomUUID();
+
+        // Generate UUID and get the last 4 digits of the string representation
+        String uuid = UUID.randomUUID().toString().replace("-", ""); // Remove dashes
+        return "USER-" + uuid.substring(uuid.length() - 4);
     }
     public static String generateStaffId() {
-        return "STAFF-" + UUID.randomUUID();
+
+        // Generate UUID and get the last 4 digits of the string representation
+        String uuid = UUID.randomUUID().toString().replace("-", ""); // Remove dashes
+        return "STAFF-" + uuid.substring(uuid.length() - 4);
     }
+
     public static String generateFieldId() {
-        return "FIELD-" + UUID.randomUUID();
+        String uuid = UUID.randomUUID().toString().replace("-", ""); // Remove dashes
+        return "FIELD-" + uuid.substring(uuid.length() - 4);
     }
+
     public static String generateCropId() {
-        return "CROP-" + UUID.randomUUID();
+
+        String uuid = UUID.randomUUID().toString().replace("-", ""); // Remove dashes
+        return "CROP-" + uuid.substring(uuid.length() - 4);
     }
     public static String generateLogId() {
-        return "LOG-" + UUID.randomUUID();
+
+        String uuid = UUID.randomUUID().toString().replace("-", ""); // Remove dashes
+        return "LOG-" + uuid.substring(uuid.length() - 4);
     }
+
     public static String generateVehicleId() {
-        return "VEHICLE-" + UUID.randomUUID();
+
+        String uuid = UUID.randomUUID().toString().replace("-", ""); // Remove dashes
+        return "VEHICLE-" + uuid.substring(uuid.length() - 4);
     }
     public static String generateEquipmentId() {
-        return "EQUIP-" + UUID.randomUUID();
+        String uuid = UUID.randomUUID().toString().replace("-", ""); // Remove dashes
+        return "EQUIP-" + uuid.substring(uuid.length() - 4);
+
     }
 
 
     public static String imageToBase64(byte [] profilePic) {
+
         return Base64.getEncoder().encodeToString(profilePic);
     }
 }
